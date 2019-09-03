@@ -1,0 +1,17 @@
+server:
+  port: 7083
+xxl:
+  job:
+    accessToken: ''
+    admin:
+      addresses: http://139.9.60.208:8081/xxl-job-admin
+    executor:
+      appname: kettle-web
+      ip: ''
+      logpath: /home/kettle/log/
+      logretentiondays: -1
+      port: 2001
+spring:
+  jobPath: /home/kettle/job/
+  pluginPath: /home/kettle/plugin
+
