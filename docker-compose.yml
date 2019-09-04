@@ -1,0 +1,7 @@
+version: '3'
+services:
+  sso-login:
+    image: registry.cn-shanghai.aliyuncs.com/cartmanxie/kettle:1.0
+    restart: always
+    ports:
+      - 8083:7082
