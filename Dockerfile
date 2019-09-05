@@ -1,9 +1,8 @@
 # FROM 指定使用哪个镜像作为基准
 FROM openjdk:8-jdk-alpine
+ADD target/*.jar /app.jar
 # VOLUME 为挂载路径  -v
 VOLUME /tmp
-# ADD 为复制文件到镜像中
-ADD KettleWeb-1.0.jar app.jar
 # RUN 为初始化时运行的命令  touch 更新 app.jar
 RUN sh -c 'touch /app.jar'
 # ENV 为设置环境变量
