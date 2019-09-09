@@ -30,8 +30,9 @@ import java.util.logging.Logger;
 
 
 /**
+ * kettle主服务
+ * @author cartman
  *
- * @author carlos
  */
 @Service
 public class KettleService {

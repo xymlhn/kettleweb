@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.zysd.kettleweb.controllers;
+package com.zysd.kettleweb.controller;
 
 import com.zysd.kettleweb.kettle.KettleService;
 
