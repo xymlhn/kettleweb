@@ -5,16 +5,17 @@
  */
 package com.zysd.kettleweb.controller;
 
+import com.zysd.kettleweb.beans.BaseEnum;
+import com.zysd.kettleweb.beans.RestResponse;
 import com.zysd.kettleweb.kettle.KettleService;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Map;
 
+import org.dom4j.tree.BaseElement;
 import org.pentaho.di.core.RowMetaAndData;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -26,24 +27,16 @@ import org.springframework.web.bind.annotation.*;
 public class KettleController {
 
     @Autowired
-    KettleService etlExecutor;
+    KettleService kettleService;
 
-    @GetMapping(value = "/job")
-    public ResponseEntity executeEtl(@RequestParam(value = "job")String name) {
-        try {
-            etlExecutor.runKjb(name, null,null);
-        } catch (Exception ex) {
-            Logger.getLogger(KettleController.class.getName()).log(Level.SEVERE, null, ex);
-            return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
+    @PostMapping(value = "/tran")
+    public RestResponse<List<Map<String,Object>>> trans(@RequestBody Map<String,String> map,
+                                                        @RequestParam(value = "file") String file) throws Exception {
+        if(map.containsKey("pageNum") && map.containsKey("pageSize")){
+            Integer pageNum = Integer.valueOf(map.get("pageNum")) * Integer.valueOf(map.get("pageSize"));
+            map.put("pageNum",pageNum.toString());
         }
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @GetMapping(value = "/tran")
-    public List<RowMetaAndData> trans(@RequestParam(value = "tran") String name) throws Exception {
-
-        List<RowMetaAndData> metaAndDataList = etlExecutor.runKtr(name,null);
-        return metaAndDataList;
+        return RestResponse.success(kettleService.runKtr(file,map));
     }
 
 }

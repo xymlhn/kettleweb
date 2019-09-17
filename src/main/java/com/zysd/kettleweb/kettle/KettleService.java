@@ -7,24 +7,27 @@ package com.zysd.kettleweb.kettle;
 
 import com.xxl.job.core.log.XxlJobLogger;
 import org.pentaho.di.core.RowMetaAndData;
+import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.logging.KettleLogStore;
 import org.pentaho.di.core.logging.LogLevel;
 import org.pentaho.di.core.logging.LoggingBuffer;
 import org.pentaho.di.core.parameters.UnknownParamException;
+import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.job.Job;
 import org.pentaho.di.job.JobMeta;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
+import org.pentaho.di.trans.step.RowAdapter;
+import org.pentaho.di.trans.step.RowListener;
+import org.pentaho.di.trans.step.StepInterface;
+import org.pentaho.di.trans.step.StepMetaDataCombi;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -102,32 +105,39 @@ public class KettleService {
      * @param params
      * @return
      */
-    public List<RowMetaAndData> runKtr(String filename, Map<String, String> params) {
-        try {
-            String completePath = jobPath + filename;
-            TransMeta tm = new TransMeta(completePath);
-            Trans trans = new Trans(tm);
-            if (params != null) {
-                Iterator<Map.Entry<String, String>> entries = params.entrySet().iterator();
-                while (entries.hasNext()) {
-                    Map.Entry<String, String> entry = entries.next();
-                    trans.setParameterValue(entry.getKey(),entry.getValue());
-                }
+    public List<Map<String,Object>> runKtr(String filename, Map<String, String> params) throws Exception {
+
+        String completePath = jobPath + filename;
+        TransMeta tm = new TransMeta(completePath);
+        Trans trans = new Trans(tm);
+        if (params != null) {
+            Iterator<Map.Entry<String, String>> entries = params.entrySet().iterator();
+            while (entries.hasNext()) {
+                Map.Entry<String, String> entry = entries.next();
+                //trans.setParameterValue(entry.getKey(),entry.getValue());
+                trans.setVariable(entry.getKey(),entry.getValue());
             }
-            trans.setLogLevel(LogLevel.ERROR);
-            trans.execute(null);
-            trans.waitUntilFinished();
-            //日志
-            String logChannelId = trans.getLogChannelId();
-            LoggingBuffer appender = KettleLogStore.getAppender();
-            String logText = appender.getBuffer(logChannelId, true).toString();
-            XxlJobLogger.log(logText);
-            appender.clear();
-            return null;
-        } catch (Exception e) {
-            e.printStackTrace();
-            String er = e.getMessage();
         }
-        return null;
+        trans.setLogLevel(LogLevel.ERROR);
+        trans.execute(null);
+        trans.waitUntilFinished();
+
+        //日志
+        String logChannelId = trans.getLogChannelId();
+        LoggingBuffer appender = KettleLogStore.getAppender();
+        String logText = appender.getBuffer(logChannelId, true).toString();
+        XxlJobLogger.log(logText);
+        appender.clear();
+        List<Map<String,Object>> mapList = new ArrayList<>();
+        for (RowMetaAndData rowMetaAndData : trans.getResultRows()){
+            Map<String,Object> map = new HashMap<>();
+            String[] fieldNames = rowMetaAndData.getRowMeta().getFieldNames();
+            for(int i=0;i < fieldNames.length;i++){
+                map.put(fieldNames[i],rowMetaAndData.getData()[i]);
+            }
+            mapList.add(map);
+        }
+        return mapList;
+
     }
 }
