@@ -5,16 +5,12 @@
  */
 package com.zysd.kettleweb.controller;
 
-import com.zysd.kettleweb.beans.BaseEnum;
 import com.zysd.kettleweb.beans.RestResponse;
 import com.zysd.kettleweb.kettle.KettleService;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.dom4j.tree.BaseElement;
-import org.pentaho.di.core.RowMetaAndData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,13 +26,12 @@ public class KettleController {
     KettleService kettleService;
 
     @PostMapping(value = "/tran")
-    public RestResponse<List<Map<String,Object>>> trans(@RequestBody Map<String,String> map,
-                                                        @RequestParam(value = "file") String file) throws Exception {
-        if(map.containsKey("pageNum") && map.containsKey("pageSize")){
-            Integer pageNum = Integer.valueOf(map.get("pageNum")) * Integer.valueOf(map.get("pageSize"));
-            map.put("pageNum",pageNum.toString());
+    public RestResponse<List<Map<String,Object>>> trans(@RequestBody Map<String,String> map) throws Exception {
+        if(map.containsKey("page") && map.containsKey("rows")){
+            Integer pageNum = Integer.valueOf(map.get("page")) * Integer.valueOf(map.get("rows"));
+            map.put("page",pageNum.toString());
         }
-        return RestResponse.success(kettleService.runKtr(file,map));
+        return RestResponse.success(kettleService.runKtr(map.get("file"),map));
     }
 
 }
