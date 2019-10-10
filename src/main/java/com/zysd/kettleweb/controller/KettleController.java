@@ -26,8 +26,8 @@ public class KettleController {
     @Autowired
     KettleService kettleService;
 
-    @PostMapping(value = "/tran")
-    public RestResponse trans(@RequestBody Map<String,String> map) throws Exception {
+    @PostMapping(value = "/page")
+    public RestResponse page(@RequestBody Map<String,String> map) throws Exception {
         if(map.containsKey("page") && map.containsKey("rows")){
             Integer pageNum = Integer.parseInt(map.get("page")) * Integer.parseInt(map.get("rows"));
             map.put("page",pageNum.toString());
@@ -40,6 +40,12 @@ public class KettleController {
         page.setTotal(Long.parseLong(String.valueOf(counts.get(0).get("num"))));
 
         return RestResponse.success(page);
+    }
+
+    @PostMapping(value = "/tran")
+    public RestResponse trans(@RequestBody Map<String,String> map) throws Exception {
+
+        return RestResponse.success(kettleService.runKtr(map.get("file"),map));
     }
 
 }
