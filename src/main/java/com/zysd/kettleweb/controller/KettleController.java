@@ -5,6 +5,7 @@
  */
 package com.zysd.kettleweb.controller;
 
+import com.zysd.kettleweb.beans.Page;
 import com.zysd.kettleweb.beans.RestResponse;
 import com.zysd.kettleweb.kettle.KettleService;
 
@@ -26,12 +27,19 @@ public class KettleController {
     KettleService kettleService;
 
     @PostMapping(value = "/tran")
-    public RestResponse<List<Map<String,Object>>> trans(@RequestBody Map<String,String> map) throws Exception {
+    public RestResponse trans(@RequestBody Map<String,String> map) throws Exception {
         if(map.containsKey("page") && map.containsKey("rows")){
             Integer pageNum = Integer.parseInt(map.get("page")) * Integer.parseInt(map.get("rows"));
             map.put("page",pageNum.toString());
         }
-        return RestResponse.success(kettleService.runKtr(map.get("file"),map));
+        List<Map<String,Object>> records =  kettleService.runKtr(map.get("file"),map);
+        List<Map<String,Object>> counts =  kettleService.runKtr("count_" + map.get("file"),map);
+
+        Page page = new Page();
+        page.setRecords(records);
+        page.setTotal(Long.parseLong(String.valueOf(counts.get(0).get("num"))));
+
+        return RestResponse.success(page);
     }
 
 }
