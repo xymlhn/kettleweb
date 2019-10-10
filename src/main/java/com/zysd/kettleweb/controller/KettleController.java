@@ -28,7 +28,7 @@ public class KettleController {
     @PostMapping(value = "/tran")
     public RestResponse<List<Map<String,Object>>> trans(@RequestBody Map<String,String> map) throws Exception {
         if(map.containsKey("page") && map.containsKey("rows")){
-            Integer pageNum = Integer.valueOf(map.get("page")) * Integer.valueOf(map.get("rows"));
+            Integer pageNum = Integer.parseInt(map.get("page")) * Integer.parseInt(map.get("rows"));
             map.put("page",pageNum.toString());
         }
         return RestResponse.success(kettleService.runKtr(map.get("file"),map));

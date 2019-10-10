@@ -12,6 +12,6 @@ xxl:
       logretentiondays: -1
       port: 2000
 spring:
-  jobPath: /Users/cartman/Desktop/job/
+  jobPath: /Users/cartman/项目/ucg-etl/
   pluginPath: /Users/cartman/Desktop/kettle/plugin
 
