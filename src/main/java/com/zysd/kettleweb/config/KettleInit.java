@@ -15,11 +15,14 @@ public class KettleInit implements InitializingBean {
 	@Value(value = "${spring.pluginPath}")
 	private String pluginPath;
 
+	@Value(value = "${spring.home}")
+	private String home;
+
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		try {
 			System.setProperty("KETTLE_PLUGIN_BASE_FOLDERS", pluginPath);
-
+			System.setProperty("KETTLE_HOME",home);
 			KettleEnvironment.init();
 			logger.info("Kettle环境初始化成功");
 		}catch (Exception e){
