@@ -29,8 +29,8 @@ public class KettleController {
     @PostMapping(value = "/page")
     public RestResponse page(@RequestBody Map<String,String> map) throws Exception {
         if(map.containsKey("page") && map.containsKey("rows")){
-            Integer pageNum = Integer.parseInt(map.get("page")) * Integer.parseInt(map.get("rows"));
-            map.put("page",pageNum.toString());
+            int pageNum = (Integer.parseInt(map.get("page")) - 1) * Integer.parseInt(map.get("rows"));
+            map.put("page", Integer.toString(pageNum));
         }
         List<Map<String,Object>> records =  kettleService.runKtr(map.get("file"),map);
         List<Map<String,Object>> counts =  kettleService.runKtr("count_" + map.get("file"),map);
