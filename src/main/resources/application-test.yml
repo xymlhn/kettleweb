@@ -15,4 +15,5 @@ xxl:
 spring:
   jobPath: /home/kettle/job/
 #  jobPath: /Users/cartman/Desktop/kettle/
+  jdbcPath: /Users/cartman/Desktop/kettle/jdbc
 

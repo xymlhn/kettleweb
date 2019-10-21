@@ -14,4 +14,4 @@ xxl:
 spring:
   jobPath: /Users/cartman/项目/ucg-etl/
   pluginPath: /Users/cartman/Desktop/kettle/plugin
-
+  jdbcPath: /Users/cartman/Desktop/kettle/jdbc

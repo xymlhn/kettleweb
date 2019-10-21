@@ -22,16 +22,17 @@ public class KettleInit implements InitializingBean {
 	@Value(value = "${spring.pluginPath}")
 	private String pluginPath;
 
+	@Value(value = "${spring.jdbcPath}")
+	private String jdbcPath;
 
 	@Override
 	public void afterPropertiesSet() {
 		try {
-			File file = ResourceUtils.getFile(ResourceUtils.CLASSPATH_URL_PREFIX + "kettle");
-			Const.JNDI_DIRECTORY = file.getPath();
+			Const.JNDI_DIRECTORY = jdbcPath;
 
 			System.setProperty("KETTLE_PLUGIN_BASE_FOLDERS", pluginPath);
 			System.setProperty( "java.naming.factory.initial", "org.osjava.sj.SimpleContextFactory" );
-			System.setProperty( "org.osjava.sj.root", file.getPath());
+			System.setProperty( "org.osjava.sj.root", jdbcPath);
 			System.setProperty( "org.osjava.sj.delimiter", "/" );
 
 			KettleEnvironment.init(true);
