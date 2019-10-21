@@ -14,5 +14,5 @@ xxl:
 spring:
   jobPath: /home/kettle/job/ucg-etl/
   pluginPath: /home/kettle/plugin
-  jdbcPath: /home/kettle/jdbc/
+  jdbcPath: /home/kettle/jdbc
 
