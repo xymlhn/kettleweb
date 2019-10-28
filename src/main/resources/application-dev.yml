@@ -24,7 +24,7 @@ logging:
 
 #邮件配置
 mail:
-  username: system@join-share.co
+  username: system@join-share.com
   password: ucg_123456
   sender: system@join-share.com
   host: smtp.chengmail.cn"
