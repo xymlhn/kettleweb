@@ -20,3 +20,11 @@ spring:
 
 logging:
   path: /Users/cartman/crm
+
+mail:
+  username: system@join-share.co
+  password: ucg_123456
+  sender: system@join-share.com
+  host: smtp.chengmail.cn"
+  port: 25
+  address: luoxianze@join-share.com

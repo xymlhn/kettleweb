@@ -40,7 +40,7 @@ import java.util.logging.Logger;
 @Service
 public class KettleService {
 
-    @Value(value = "${spring.jobPath}")
+    @Value(value = "${kettle.jobPath}")
     private String jobPath;
 
     /**

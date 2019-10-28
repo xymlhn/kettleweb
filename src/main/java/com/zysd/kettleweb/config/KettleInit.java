@@ -19,11 +19,24 @@ import java.io.IOException;
  */
 @Log
 public class KettleInit implements InitializingBean {
-	@Value(value = "${spring.pluginPath}")
+	@Value(value = "${kettle.pluginPath}")
 	private String pluginPath;
 
-	@Value(value = "${spring.jdbcPath}")
+	@Value(value = "${kettle.jdbcPath}")
 	private String jdbcPath;
+
+	@Value(value = "${mail.password}")
+	private String mailPassword;
+	@Value(value = "${mail.port}")
+	private String mailPort;
+	@Value(value = "${mail.sender}")
+	private String mailSender;
+	@Value(value = "${mail.host}")
+	private String mailHost;
+	@Value(value = "${mail.address}")
+	private String mailAddress;
+	@Value(value = "${mail.username}")
+	private String mailUsername;
 
 	@Override
 	public void afterPropertiesSet() {
@@ -36,12 +49,13 @@ public class KettleInit implements InitializingBean {
 			System.setProperty( "org.osjava.sj.root", jdbcPath);
 			System.setProperty( "org.osjava.sj.delimiter", "/" );
 
-			System.setProperty( "MAIL_PASSWORD", "ucg_123456" );
-			System.setProperty( "MAIL_PORT", "25" );
-			System.setProperty( "MAIL_SENDER", "system@join-share.com" );
-			System.setProperty( "MAIL_HOST", "smtp.chengmail.cn" );
-			System.setProperty( "MAIL_ADDRESSEE", "luoxianze@join-share.com" );
-			System.setProperty( "MAIL_USERNAME", "system@join-share.com" );
+			//邮件配置
+			System.setProperty( "MAIL_USERNAME", mailUsername );
+			System.setProperty( "MAIL_PASSWORD", mailPassword );
+			System.setProperty( "MAIL_ADDRESSEE", mailAddress );
+			System.setProperty( "MAIL_PORT", mailPort );
+			System.setProperty( "MAIL_SENDER", mailSender );
+			System.setProperty( "MAIL_HOST", mailHost );
 
 
 

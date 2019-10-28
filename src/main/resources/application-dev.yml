@@ -11,10 +11,22 @@ xxl:
       logpath: /Users/cartman/Desktop/kettle/
       logretentiondays: -1
       port: 2000
-spring:
+
+#kettle路径配置
+kettle:
   jobPath: /Users/cartman/项目/ucg-etl/
   pluginPath: /Users/cartman/Desktop/kettle/plugin
   jdbcPath: /Users/cartman/Desktop/kettle/jdbc
 
+#日志配置
 logging:
   path: /Users/cartman/crm
+
+#邮件配置
+mail:
+  username: system@join-share.co
+  password: ucg_123456
+  sender: system@join-share.com
+  host: smtp.chengmail.cn"
+  port: 25
+  address: luoxianze@join-share.com
