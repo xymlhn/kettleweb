@@ -16,3 +16,6 @@ spring:
   pluginPath: /home/kettle/plugin
   jdbcPath: /home/kettle/jdbc
 
+
+logging:
+  path: /home/kettle/logs/kettle

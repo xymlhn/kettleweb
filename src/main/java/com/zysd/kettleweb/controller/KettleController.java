@@ -48,4 +48,10 @@ public class KettleController {
         return RestResponse.success(kettleService.runKtr(map.get("file"),map));
     }
 
+
+    @PostMapping(value = "/kjb")
+    public RestResponse kjb(@RequestBody Map<String,String> map) throws Exception {
+        kettleService.runKjb(map.get("file"),map,null);
+        return RestResponse.success("");
+    }
 }

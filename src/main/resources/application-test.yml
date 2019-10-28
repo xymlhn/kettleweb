@@ -17,3 +17,6 @@ spring:
 #  jobPath: /Users/cartman/Desktop/kettle/
   jdbcPath: /Users/cartman/Desktop/kettle/jdbc
 
+
+logging:
+  path: /Users/cartman/crm

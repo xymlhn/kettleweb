@@ -28,12 +28,22 @@ public class KettleInit implements InitializingBean {
 	@Override
 	public void afterPropertiesSet() {
 		try {
-			Const.JNDI_DIRECTORY = jdbcPath;
-
+			//插件配置
 			System.setProperty("KETTLE_PLUGIN_BASE_FOLDERS", pluginPath);
+			//jndi配置
+			Const.JNDI_DIRECTORY = jdbcPath;
 			System.setProperty( "java.naming.factory.initial", "org.osjava.sj.SimpleContextFactory" );
 			System.setProperty( "org.osjava.sj.root", jdbcPath);
 			System.setProperty( "org.osjava.sj.delimiter", "/" );
+
+			System.setProperty( "MAIL_PASSWORD", "ucg_123456" );
+			System.setProperty( "MAIL_PORT", "25" );
+			System.setProperty( "MAIL_SENDER", "system@join-share.com" );
+			System.setProperty( "MAIL_HOST", "smtp.chengmail.cn" );
+			System.setProperty( "MAIL_ADDRESSEE", "luoxianze@join-share.com" );
+			System.setProperty( "MAIL_USERNAME", "system@join-share.com" );
+
+
 
 			KettleEnvironment.init(true);
 			log.info("Kettle环境初始化成功");
