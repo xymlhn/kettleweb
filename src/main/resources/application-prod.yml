@@ -12,7 +12,7 @@ xxl:
       logretentiondays: -1
       port: 2001
 spring:
-  jobPath: /home/kettle/job/ucg-etl/
+  jobPath: /home/kettle/job/ucg-etl
   pluginPath: /home/kettle/plugin
   jdbcPath: /home/kettle/jdbc
 
