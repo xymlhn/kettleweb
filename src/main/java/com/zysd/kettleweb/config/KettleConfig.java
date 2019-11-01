@@ -3,7 +3,7 @@ package com.zysd.kettleweb.config;
 import org.springframework.context.annotation.*;
 
 @Configuration
-public class SpringConfig {
+public class KettleConfig {
 
     @Bean(name = "KettleEnvironmentInit")
     public KettleInit startInit(){
