@@ -58,8 +58,6 @@ public class KettleInit implements InitializingBean {
 			System.setProperty( "MAIL_SENDER", mailSender );
 			System.setProperty( "MAIL_HOST", mailHost );
 
-			System.setProperty( "filter", BaseEnum.NULL_STRING);
-			System.setProperty( "order", BaseEnum.NULL_STRING);
 
 			KettleEnvironment.init(true);
 			log.info("Kettle环境初始化成功");

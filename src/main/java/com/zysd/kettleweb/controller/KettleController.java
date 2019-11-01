@@ -28,6 +28,15 @@ public class KettleController {
 
     @PostMapping(value = "/page")
     public RestResponse page(@RequestBody Map<String,String> map) throws Exception {
+
+        if(!map.containsKey("filter")){
+            map.put("filter","");
+        }
+
+        if(!map.containsKey("order")){
+            map.put("order","");
+        }
+
         if(map.containsKey("page") && map.containsKey("rows")){
             int pageNum = (Integer.parseInt(map.get("page")) - 1) * Integer.parseInt(map.get("rows"));
             map.put("page", Integer.toString(pageNum));
@@ -51,6 +60,7 @@ public class KettleController {
 
     @PostMapping(value = "/kjb")
     public RestResponse kjb(@RequestBody Map<String,String> map) throws Exception {
+
         kettleService.runKjb(map.get("file"),map,null);
         return RestResponse.success("");
     }
