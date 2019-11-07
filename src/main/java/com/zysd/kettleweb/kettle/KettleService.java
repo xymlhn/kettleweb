@@ -89,7 +89,7 @@ public class KettleService {
                     XxlJobLogger.log(etlJobName + "----- 转换成功");
                 } else {
                     XxlJobLogger.log(etlJobName + "转换失败");
-                    throw new Exception("转换失败");
+                    throw new Exception(logText);
 
                 }
             } else {
@@ -127,6 +127,15 @@ public class KettleService {
         LoggingBuffer appender = KettleLogStore.getAppender();
         String logText = appender.getBuffer(logChannelId, true).toString();
         XxlJobLogger.log(logText);
+
+        if (trans.isFinished() && trans.getErrors() == 0) {
+            XxlJobLogger.log(filename + "----- 转换成功");
+        } else {
+            XxlJobLogger.log(filename + "转换失败");
+            throw new Exception(logText);
+
+        }
+
         appender.clear();
         List<Map<String,Object>> mapList = new ArrayList<>();
         for (RowMetaAndData rowMetaAndData : trans.getResultRows()){
